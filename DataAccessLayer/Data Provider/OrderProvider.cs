@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Data_Provider
 {
-    class OrderProvider : IOrder
+    public class OrderProvider : IOrder
     {
         private NHibernateHelper nHibernate;
         private ISession session;

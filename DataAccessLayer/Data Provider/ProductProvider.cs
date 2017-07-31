@@ -10,7 +10,7 @@ using NHibernate;
 
 namespace DataAccessLayer.Data_Provider
 {
-    class ProductProvider : IProduct
+    public class ProductProvider : IProduct
     {
         private NHibernateHelper nHibernate;
         private ISession session;

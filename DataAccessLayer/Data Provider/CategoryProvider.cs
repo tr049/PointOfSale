@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Data_Provider
 {
-    class CategoryProvider : ICategory
+    public class CategoryProvider : ICategory
     {
         private NHibernateHelper nHibernate;
         private ISession session;

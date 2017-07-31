@@ -52,10 +52,6 @@
       <Project>{0f70051a-045c-4c44-b01f-a4fb4a747a12}</Project>
       <Name>Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NHibernateCore\NHibernateCore.csproj">
-      <Project>{1542b961-5c64-4736-997e-698bc91b8256}</Project>
-      <Name>NHibernateCore</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
