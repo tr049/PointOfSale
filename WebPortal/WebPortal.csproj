@@ -143,7 +143,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\OrderDetailController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -159,6 +163,31 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Product\Create.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\Edit.cshtml" />
+    <Content Include="Views\Product\Details.cshtml" />
+    <Content Include="Views\Product\Delete.cshtml" />
+    <Content Include="Views\Customer\Create.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Customer\Edit.cshtml" />
+    <Content Include="Views\Customer\Details.cshtml" />
+    <Content Include="Views\Customer\Delete.cshtml" />
+    <Content Include="Views\Category\Create.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Category\Details.cshtml" />
+    <Content Include="Views\Category\Delete.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Order\Create.cshtml" />
+    <Content Include="Views\Order\Edit.cshtml" />
+    <Content Include="Views\Order\Delete.cshtml" />
+    <Content Include="Views\Order\Details.cshtml" />
+    <Content Include="Views\OrderDetail\Index.cshtml" />
+    <Content Include="Views\OrderDetail\Create.cshtml" />
+    <Content Include="Views\OrderDetail\Edit.cshtml" />
+    <Content Include="Views\OrderDetail\Delete.cshtml" />
+    <Content Include="Views\OrderDetail\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -175,10 +204,13 @@
       <Project>{0f70051a-045c-4c44-b01f-a4fb4a747a12}</Project>
       <Name>Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NHibernateCore\NHibernateCore.csproj">
-      <Project>{1542b961-5c64-4736-997e-698bc91b8256}</Project>
-      <Name>NHibernateCore</Name>
+    <ProjectReference Include="..\Repositories\Repositories.csproj">
+      <Project>{e36580f6-632e-40ac-8777-4766e54222bd}</Project>
+      <Name>Repositories</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
