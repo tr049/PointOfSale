@@ -8,6 +8,7 @@ using System.Web;
 using System.Threading.Tasks;
 using Entities;
 using System.IO;
+using System.Reflection;
 
 namespace NHibernateCore
 {
@@ -20,7 +21,7 @@ namespace NHibernateCore
         public NHibernateHelper()
         {
             configuration = new Configuration();
-            var configurationPath = HttpContext.Current.Server.MapPath(@"~\bin\debug\hibernate.cfg.xml");
+            var configurationPath = "NHibernateCore.hibernate.cfg.xml";
             configuration.Configure(configurationPath);
 
             var productConfigurationFile = HttpContext.Current.Server.MapPath(@"~\bin\debug\MappingFiles\ProductDTO.hbm.xml");
