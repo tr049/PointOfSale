@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Entities" namespace="Entities" auto-import="true">
+
+  <class name="OrderDTO" table="Order">
+    <id name="OrderId" column ="OrderId">
+      <generator class="native"/>
+    </id>
+    <property name="Discount" column="discount"/>
+    <property name="Date" column="date"/>
+    <many-to-one name="Customers" class="CustomerDTO" column="customerCNIC" unique="true"/>
+    <bag name="OrderDetails" inverse="true" generic="true" lazy="true" fetch="subselect">
+      <key column="OrderId"/>
+      <one-to-many class="OrderDetailDTO" />
+    </bag>
+  </class>
+
+
+</hibernate-mapping>

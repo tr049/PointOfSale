@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Entities" namespace="Entities" auto-import="true">
+
+  <class name="OrderDetailDTO" table="OrderDetail">
+    <id name="OrderDetailId" column ="ProductId">
+      <generator class="native"/>
+    </id>
+    <property name="ProductId" column="productId"/>
+    <property name="OrderId" column="orderId"/>
+    <property name="Price" column="price"/>
+    <property name="Quantity" column="quantity"/>
+    <many-to-one name="Order" class="OrderDTO" column="OrderId" unique="true"/>
+    <bag name="Products" inverse="true" generic="true" lazy="true" fetch="subselect">
+      <key column="ProductId"/>
+      <one-to-many class="ProductDTO" />
+    </bag>
+  </class>
+
+
+</hibernate-mapping>

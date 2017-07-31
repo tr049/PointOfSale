@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Entities" namespace="Entities" auto-import="true">
+
+  <class name="CategoryDTO" table="Category">
+    <id name="CategoryId" column ="categoryId">
+      <generator class="native"/>
+    </id>
+    <property name="Name" column="name"/>
+    <property name="Type" column="type"/>
+    <bag name="Products" inverse="true" generic="true" lazy="true" fetch="subselect">
+      <key column="CategoryId"/>
+      <one-to-many class="ProductDTO" />
+    </bag>
+    
+  </class>
+
+
+</hibernate-mapping>

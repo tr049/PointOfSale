@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="icon" href="http://www.ssidecisions.com/favicon.ico" type="image/x-icon" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header" style="background-color:#4CAF50; padding-left:15px;margin-bottom:0px;">
+                @Html.ActionLink("Task by Sir Umer", "Index", "NHibernate", new { area = "" }, new { @class = "navbar-brand", @style = "color:#FFFFFF;" })
+            </div>
+            <div class="navbar-collapse collapse">
+
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">NHibernate<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Products", "Index", "NHibernate")</li>
+                            <li>@Html.ActionLink("Orders", "Order", "NHibernate")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">HighCharts<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Pie Chart", "PieChart", "HighCharts")</li>
+                            <li>@Html.ActionLink("Line Chart", "LineChart", "HighCharts")</li>
+                            <li>@Html.ActionLink("Time Series", "TimeSeriesChart", "HighCharts")</li>
+                            <li>@Html.ActionLink("Stack Bar Chart", "StackBarChart", "HighCharts")</li>
+                            <li>@Html.ActionLink("Donut 3D Chart", "Donut3DChart", "HighCharts")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ignite UI <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Grid View", "Index", "Ignite")</li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+
+    </div>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @RenderSection("Scripts", false)
+
+    <div class="container">
+        <footer class="container" style="width:100%; position:absolute;bottom:0px;">
+            <hr />
+            <p>&copy; @DateTime.Now.Year - SSI - Developed by Taimoor Raza</p>
+        </footer>
+    </div>
+
+
+</body>
+</html>
