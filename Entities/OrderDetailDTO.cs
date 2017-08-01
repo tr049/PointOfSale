@@ -9,23 +9,20 @@ namespace Entities
     public class OrderDetailDTO: ICloneable
     {
         public virtual int OrderDetailId { get; set; }
-        public virtual int ProductId { get; set; }
-        public virtual int OrderId { get; set; }
         public virtual double Price { get; set; }
         public virtual int Quantity { get; set; }
         public virtual OrderDTO Order { get; set; }
-        public object Clone()
+        public virtual object Clone()
         {
             var item = new OrderDetailDTO
             {
-                OrderId = OrderId,
-                ProductId = ProductId,
+                Order= Order,
                 Quantity = Quantity,
                 Price = Price
             };
             return item;
         }
-        public virtual IList<ProductDTO> Products { get; set; }
+        public virtual ProductDTO Product { get; set; }
         public override bool Equals(object obj)
         {
             return ((OrderDetailDTO)obj).OrderDetailId == OrderDetailId;

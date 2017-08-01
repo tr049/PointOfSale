@@ -65,7 +65,8 @@ namespace DataAccessLayer.Data_Provider
             using (session.BeginTransaction())
             {
                 CategoryDTO old = session.Get<CategoryDTO>(dto.CategoryId);
-                old = dto;
+                old.Name = dto.Name;
+                old.Type = dto.Type;
                 session.SaveOrUpdate(old);
                 session.Transaction.Commit();
                 return 1;

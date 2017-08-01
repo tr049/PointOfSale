@@ -58,6 +58,7 @@ namespace WebPortal.Controllers
         [HttpPost]
         public ActionResult Edit(int id, CustomerDTO obj)
         {
+            obj.CustomerId = id;
             try
             {
                 MyRepository repository = new MyRepository();
@@ -65,7 +66,7 @@ namespace WebPortal.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception e)
             {
                 return View();
             }
@@ -74,7 +75,8 @@ namespace WebPortal.Controllers
         // GET: Customer/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            MyRepository repository = new MyRepository();
+            return View(repository.GetCustomer(id));
         }
 
         // POST: Customer/Delete/5
@@ -84,7 +86,7 @@ namespace WebPortal.Controllers
             try
             {
                 MyRepository repository = new MyRepository();
-                repository.DeleteCustomer(obj);
+                repository.DeleteCustomer(id);
                 return RedirectToAction("Index");
             }
             catch

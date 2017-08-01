@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Infragistics.Web.Mvc;
+@model IQueryable<Entities.ProductDTO>
+
+@(Html.Infragistics()
+    .Grid(Model)
+    .ID("igGrid")
+    .Width("600px")
+    .Height("600px")
+    .AutoGenerateColumns(false)
+    .Columns(column =>
+    {
+	    column.For(x => x.ProductId).HeaderText("ProductId");
+	    column.For(x => x.Name).HeaderText("Name");
+	    column.For(x => x.Description).HeaderText("Description");
+	    column.For(x => x.Price).HeaderText("Price");
+	    column.For(x => x.Quantity).HeaderText("Quantity");
+        // Property is not primitive may cause circular reference
+        // column.For(x => x.Category).HeaderText("Category");
+        // Property is not primitive may cause circular reference
+        // column.For(x => x.OrderDetails).HeaderText("OrderDetails");
+    })
+    .DataBind()
+    .Render())

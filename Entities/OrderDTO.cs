@@ -11,17 +11,17 @@ namespace Entities
         public virtual int OrderId { get; set; }
         public virtual double Discount { get; set; }
         public virtual DateTime Date { get; set; }
-
-        public virtual int CustomerId { get; set; }
-        public virtual CustomerDTO Customers { get; set; }
+        
+        public virtual CustomerDTO Customer { get; set; }
         public virtual IList<OrderDetailDTO> OrderDetails { get; set; }
-        public object Clone()
+        public virtual object Clone()
         {
             var item = new OrderDTO
             {
-                CustomerId = CustomerId,
+                Customer = Customer,
                 Discount = Discount,
-                Date = Date
+                Date = Date,
+                OrderDetails = OrderDetails
             };
             return item;
         }

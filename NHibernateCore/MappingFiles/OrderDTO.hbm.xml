@@ -8,7 +8,7 @@
     </id>
     <property name="Discount" column="discount"/>
     <property name="Date" column="date"/>
-    <many-to-one name="Customers" class="CustomerDTO" column="customerCNIC" unique="true"/>
+    <many-to-one name="Customer" class="CustomerDTO" column="customerId" unique="true"/>
     <bag name="OrderDetails" inverse="true" generic="true" lazy="true" fetch="subselect">
       <key column="OrderId"/>
       <one-to-many class="OrderDetailDTO" />

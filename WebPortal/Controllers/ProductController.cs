@@ -27,6 +27,8 @@ namespace WebPortal.Controllers
         // GET: Product/Create
         public ActionResult Create()
         {
+            MyRepository repository = new MyRepository();
+            ViewBag.Categories = repository.GetCategorys();
             return View();
         }
 
@@ -51,6 +53,7 @@ namespace WebPortal.Controllers
         public ActionResult Edit(int id)
         {
             MyRepository repository = new MyRepository();
+            ViewBag.Categories = repository.GetCategorys();
             return View(repository.GetProduct(id));
         }
 
@@ -58,6 +61,7 @@ namespace WebPortal.Controllers
         [HttpPost]
         public ActionResult Edit(int id, ProductDTO obj)
         {
+            obj.ProductId = id;
             try
             {
                 MyRepository repository = new MyRepository();
@@ -65,7 +69,7 @@ namespace WebPortal.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception e)
             {
                 return View();
             }
@@ -74,7 +78,8 @@ namespace WebPortal.Controllers
         // GET: Product/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            MyRepository repository = new MyRepository();
+            return View(repository.GetProduct(id));
         }
 
         // POST: Product/Delete/5
@@ -84,7 +89,7 @@ namespace WebPortal.Controllers
             try
             {
                 MyRepository repository = new MyRepository();
-                repository.DeleteProduct(obj);
+                repository.DeleteProduct(id);
                 return RedirectToAction("Index");
             }
             catch

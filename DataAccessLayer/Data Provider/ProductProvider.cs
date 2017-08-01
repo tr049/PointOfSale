@@ -65,8 +65,12 @@ namespace DataAccessLayer.Data_Provider
             using (session.BeginTransaction())
             {
                 ProductDTO old = session.Get<ProductDTO>(dto.ProductId);
-                old = dto;
-                session.SaveOrUpdate(old);
+                old.Name = dto.Name;
+                old.Price = dto.Price;
+                old.Quantity = dto.Quantity;
+                old.Description = dto.Description;
+                old.Category = dto.Category;
+                session.Update(old);
                 session.Transaction.Commit();
                 return 1;
             }

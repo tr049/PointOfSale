@@ -6,15 +6,11 @@
     <id name="OrderDetailId" column ="ProductId">
       <generator class="native"/>
     </id>
-    <property name="ProductId" column="productId"/>
-    <property name="OrderId" column="orderId"/>
     <property name="Price" column="price"/>
     <property name="Quantity" column="quantity"/>
     <many-to-one name="Order" class="OrderDTO" column="OrderId" unique="true"/>
-    <bag name="Products" inverse="true" generic="true" lazy="true" fetch="subselect">
-      <key column="ProductId"/>
-      <one-to-many class="ProductDTO" />
-    </bag>
+    <many-to-one name="Product" class="ProductDTO" column="productId" unique="true"/>
+    
   </class>
 
 

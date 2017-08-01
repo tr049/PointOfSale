@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class CategoryDTO: ICloneable
+    public class CategoryDTO
     {
         public virtual int CategoryId { get; set; }
         public virtual string Name { get; set; }
@@ -15,21 +15,17 @@ namespace Entities
         public virtual IList<ProductDTO> Products { get; set; }
         public override bool Equals(object obj)
         {
-            return ((CategoryDTO)obj).Name == Name;
+            if(obj.ToString() == "")
+            {
+                return false;
+            }
+            return ((CategoryDTO)obj).CategoryId == CategoryId;
         }
         public override int GetHashCode()
         {
-            return Name.GetHashCode();
+            return CategoryId.GetHashCode();
         }
 
-        public object Clone()
-        {
-            var item = new CategoryDTO
-            {
-                Name = Name,
-                Type = Type
-            };
-            return item;
-        }
+        
     }
 }

@@ -3,13 +3,14 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Entities" namespace="Entities" auto-import="true">
 
   <class name="CustomerDTO" table="Customer">
-    <id name="CustomerCNIC" column ="customerCNIC">
-      
+    <id name="CustomerId" column ="customerId">
+      <generator class="native"/>
     </id>
     <property name="CustomerName" column="customerName"/>
     <property name="CustomerPhoneNumber" column="customerPhoneNumber"/>
+    <property name="CustomerCNIC" column="customerCNIC"/>
     <bag name="Orders" inverse="true" generic="true" lazy="true" fetch="subselect">
-      <key column="CustomerCNIC"/>
+      <key column="customerId"/>
       <one-to-many class="OrderDTO" />
     </bag>
   </class>

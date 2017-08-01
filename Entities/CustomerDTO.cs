@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,17 +9,19 @@ namespace Entities
 {
     public class CustomerDTO: ICloneable
     {
-        public virtual int CustomerCNIC { get; set; }
+        public virtual int CustomerId { get; set; }
         public virtual string CustomerName { get; set; }
-        public virtual int CustomerPhoneNumber { get; set; }
+        public virtual string CustomerCNIC{ get; set; }
+        public virtual string CustomerPhoneNumber { get; set; }
         public virtual IList<OrderDTO> Orders { get; set; }
 
-        public object Clone()
+        public virtual object Clone()
         {
             var item = new CustomerDTO
             {
-                CustomerCNIC = CustomerCNIC,
+                CustomerId = CustomerId,
                 CustomerName = CustomerName,
+                CustomerCNIC = CustomerCNIC,
                 CustomerPhoneNumber = CustomerPhoneNumber
             };
             return item;
@@ -26,11 +29,11 @@ namespace Entities
 
         public override bool Equals(object obj)
         {
-            return ((CustomerDTO)obj).CustomerCNIC == CustomerCNIC;
+            return ((CustomerDTO)obj).CustomerId == CustomerId;
         }
         public override int GetHashCode()
         {
-            return CustomerCNIC.GetHashCode();
+            return CustomerId.GetHashCode();
         }
     }
 }

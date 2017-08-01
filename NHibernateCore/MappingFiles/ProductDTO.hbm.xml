@@ -11,8 +11,10 @@
     <property name="Price" column="price"/>
     <property name="Quantity" column="quantity"/>
     <many-to-one name="Category" class="CategoryDTO" column="categoryId" unique="true"/>
-    
-    
+    <bag name="OrderDetails" inverse="true" generic="true" lazy="true" fetch="subselect">
+      <key column="productId"/>
+      <one-to-many class="OrderDetailDTO" />
+    </bag>
   </class>
 
 

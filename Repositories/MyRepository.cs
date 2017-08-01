@@ -46,10 +46,11 @@ namespace Repositories
             return provider.UpdateProduct(obj);
         }
 
-        public int DeleteProduct(ProductDTO obj)
+        public int DeleteProduct(int id)
         {
             ProductProvider provider = new ProductProvider();
-            if (provider.GetProductById(obj.ProductId) == null)
+            var obj = provider.GetProductById(id);
+            if ( obj != null)
             {
                 provider.DeleteProduct(obj);
                 return 1;
@@ -87,10 +88,11 @@ namespace Repositories
             return provider.UpdateCategory(obj);
         }
 
-        public int DeleteCategory(CategoryDTO obj)
+        public int DeleteCategory(int id)
         {
             CategoryProvider provider = new CategoryProvider();
-            if (provider.GetCategoryById(obj.CategoryId) == null)
+            var obj = provider.GetCategoryById(id);
+            if ( obj != null)
             {
                 provider.DeleteCategory(obj);
                 return 1;
@@ -103,7 +105,7 @@ namespace Repositories
         public int AddCustomer(CustomerDTO obj)
         {
             CustomerProvider provider = new CustomerProvider();
-            if (provider.GetCustomerById(obj.CustomerCNIC) == null)
+            if (provider.GetCustomerById(obj.CustomerId) == null)
             {
                 provider.AddCustomer(obj);
                 return 1;
@@ -129,10 +131,11 @@ namespace Repositories
             return provider.UpdateCustomer(obj);
         }
 
-        public int DeleteCustomer(CustomerDTO obj)
+        public int DeleteCustomer(int id)
         {
             CustomerProvider provider = new CustomerProvider();
-            if (provider.GetCustomerById(obj.CustomerCNIC) == null)
+            var obj = provider.GetCustomerById(id);
+            if ( obj != null)
             {
                 provider.DeleteCustomer(obj);
                 return 1;
@@ -170,10 +173,11 @@ namespace Repositories
             return provider.UpdateOrder(obj);
         }
 
-        public int DeleteOrder(OrderDTO obj)
+        public int DeleteOrder(int id)
         {
             OrderProvider provider = new OrderProvider();
-            if (provider.GetOrderById(obj.OrderId) == null)
+            var obj = provider.GetOrderById(id);
+            if ( obj != null)
             {
                 provider.DeleteOrder(obj);
                 return 1;
@@ -211,10 +215,11 @@ namespace Repositories
             return provider.UpdateOrderDetail(obj);
         }
 
-        public int DeleteOrderDetail(OrderDetailDTO obj)
+        public int DeleteOrderDetail(int id)
         {
             OrderDetailProvider provider = new OrderDetailProvider();
-            if (provider.GetOrderDetailById(obj.OrderDetailId) == null)
+            var obj = provider.GetOrderDetailById(id);
+            if ( obj != null)
             {
                 provider.DeleteOrderDetail(obj);
                 return 1;

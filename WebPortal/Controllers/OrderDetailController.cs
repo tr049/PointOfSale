@@ -84,7 +84,7 @@ namespace WebPortal.Controllers
             try
             {
                 MyRepository repository = new MyRepository();
-                repository.DeleteOrderDetail(obj);
+                repository.DeleteOrderDetail(id);
                 return RedirectToAction("Index");
             }
             catch

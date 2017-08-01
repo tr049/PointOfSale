@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Entities;
 using System.IO;
 using System.Reflection;
+using System.Xml;
 
 namespace NHibernateCore
 {
@@ -21,14 +22,13 @@ namespace NHibernateCore
         public NHibernateHelper()
         {
             configuration = new Configuration();
-            var configurationPath = "NHibernateCore.hibernate.cfg.xml";
-            configuration.Configure(configurationPath);
-
-            var productConfigurationFile = HttpContext.Current.Server.MapPath(@"~\bin\debug\MappingFiles\ProductDTO.hbm.xml");
-            var orderConfigurationFile = HttpContext.Current.Server.MapPath(@"~\bin\debug\MappingFiles\OrderDTO.hbm.xml");
-            var orderDetailConfigurationFile = HttpContext.Current.Server.MapPath(@"~\bin\debug\MappingFiles\OrderDetailDTO.hbm.xml");
-            var customerConfigurationFile = HttpContext.Current.Server.MapPath(@"~\bin\debug\MappingFiles\CustomerDTO.hbm.xml");
-            var categoryConfigurationFile = HttpContext.Current.Server.MapPath(@"~\bin\debug\MappingFiles\CategoryDTO.hbm.xml");
+            var embededHibernateCFG = this.GetType().Assembly.GetManifestResourceStream("NHibernateCore.hibernate.cfg.xml");
+            configuration.Configure(XmlReader.Create(embededHibernateCFG));
+            var productConfigurationFile = HttpContext.Current.Server.MapPath(@"~\bin\MappingFiles\ProductDTO.hbm.xml");
+            var orderConfigurationFile = HttpContext.Current.Server.MapPath(@"~\bin\MappingFiles\OrderDTO.hbm.xml");
+            var orderDetailConfigurationFile = HttpContext.Current.Server.MapPath(@"~\bin\MappingFiles\OrderDetailDTO.hbm.xml");
+            var customerConfigurationFile = HttpContext.Current.Server.MapPath(@"~\bin\MappingFiles\CustomerDTO.hbm.xml");
+            var categoryConfigurationFile = HttpContext.Current.Server.MapPath(@"~\bin\MappingFiles\CategoryDTO.hbm.xml");
 
             configuration.AddFile(productConfigurationFile);
             configuration.AddFile(orderConfigurationFile);

@@ -33,7 +33,7 @@ namespace DataAccessLayer.Data_Provider
         {
             using (session.BeginTransaction())
             {
-                CustomerDTO old = session.Get<CustomerDTO>(dto.CustomerCNIC);
+                CustomerDTO old = session.Get<CustomerDTO>(dto.CustomerId);
                 session.Delete(old);
                 session.Transaction.Commit();
                 return 1;
@@ -64,9 +64,12 @@ namespace DataAccessLayer.Data_Provider
         {
             using (session.BeginTransaction())
             {
-                CustomerDTO old = session.Get<CustomerDTO>(dto.CustomerCNIC);
-                old = dto;
-                session.SaveOrUpdate(old);
+                CustomerDTO old = session.Get<CustomerDTO>(dto.CustomerId);
+                old.CustomerId = dto.CustomerId;
+                old.CustomerName = dto.CustomerName;
+                old.CustomerCNIC = dto.CustomerCNIC;
+                old.CustomerPhoneNumber = dto.CustomerPhoneNumber;
+                session.Update(old);
                 session.Transaction.Commit();
                 return 1;
             }

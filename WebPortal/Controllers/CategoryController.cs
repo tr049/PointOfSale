@@ -58,6 +58,7 @@ namespace WebPortal.Controllers
         [HttpPost]
         public ActionResult Edit(int id, CategoryDTO obj)
         {
+            obj.CategoryId = id;
             try
             {
                 MyRepository repository = new MyRepository();
@@ -84,7 +85,7 @@ namespace WebPortal.Controllers
             try
             {
                 MyRepository repository = new MyRepository();
-                repository.DeleteCategory(obj);
+                repository.DeleteCategory(id);
                 return RedirectToAction("Index");
             }
             catch

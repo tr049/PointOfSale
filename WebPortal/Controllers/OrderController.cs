@@ -38,7 +38,7 @@ namespace WebPortal.Controllers
             {
                 MyRepository repository = new MyRepository();
                 repository.AddOrder(obj);
-
+                ViewBag.Customers = repository.GetCustomers();
                 return RedirectToAction("Index");
             }
             catch
@@ -84,7 +84,7 @@ namespace WebPortal.Controllers
             try
             {
                 MyRepository repository = new MyRepository();
-                repository.DeleteOrder(obj);
+                repository.DeleteOrder(id);
                 return RedirectToAction("Index");
             }
             catch

@@ -6,34 +6,23 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class ProductDTO: ICloneable
+    public class ProductDTO
     {
         public virtual int ProductId { get; set; }
         public virtual string Name { get; set; }
         public virtual string Description { get; set; }
         public virtual double Price { get; set; }
         public virtual int Quantity { get; set; }
-        public virtual int CategoryId { get; set; }
         public virtual CategoryDTO Category { get; set; }
-        public object Clone()
-        {
-            var item = new ProductDTO
-            {
-                Name = Name,
-                Description = Description,
-                Price = Price,
-                Quantity = Quantity,
-                CategoryId = CategoryId
-            };
-            return item;
-        }
+        public virtual IList<OrderDetailDTO> OrderDetails { get; set; }
+        
         public override bool Equals(object obj)
         {
-            return ((ProductDTO)obj).Name == Name;
+            return ((ProductDTO)obj).ProductId == ProductId;
         }
         public override int GetHashCode()
         {
-            return Name.GetHashCode();
+            return ProductId.GetHashCode();
         }
     }
 }
