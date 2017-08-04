@@ -46,7 +46,11 @@
     <Compile Include="OrderDTO.cs" />
     <Compile Include="OrderDetailDTO.cs" />
     <Compile Include="ProductDTO.cs" />
+    <Compile Include="ProductStockDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StockInDTO.cs" />
+    <Compile Include="StockOutDTO.cs" />
+    <Compile Include="UserDTO.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

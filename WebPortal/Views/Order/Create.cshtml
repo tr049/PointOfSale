@@ -1,67 +1,554 @@
-﻿@model Entities.OrderDTO
+﻿@model WebPortal.Models.BigModelDTO
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Order";
+    ViewBag.SubTitle = "Add new Order";
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<Entities.CustomerDTO> customers = ViewBag.Customers;
+    List<Entities.ProductStockDTO> products = ViewBag.Products;
 }
 
-<h2>Create</h2>
+
+<div class="container">
+    <div class="row">
+        <section>
+            <div class="wizard">
+                <div class="wizard-inner">
+                    <div class="connecting-line"></div>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
+                                <span class="round-tab">
+                                    <i class="glyphicon glyphicon glyphicon-user"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li role="presentation" class="disabled">
+                            <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
+                                <span class="round-tab">
+                                    <i class="glyphicon glyphicon glyphicon-plus"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li role="presentation" class="disabled">
+                            <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
+                                <span class="round-tab">
+                                    <i class="glyphicon glyphicon glyphicon-save"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li role="presentation" class="disabled">
+                            <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
+                                <span class="round-tab">
+                                    <i class="glyphicon glyphicon-ok"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="tab-content">
+                        <div class="tab-pane active col-md-offset-2" role="tabpanel" id="step1">
+                            <h3 class="col-md-offset-3" style="margin-bottom:40px;">Customer Information</h3>
+                            <div class="row">
+                                <div class="form-group col-md-8">
+                                    @Html.LabelFor(model => model.customer.CustomerCNIC, "CNIC", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.customer.CustomerCNIC, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.customer.CustomerCNIC, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                             </div>
+                            <div class="row">
+                                <div class="form-group col-md-8">
+                                    @Html.LabelFor(model => model.customer.CustomerName, "Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.customer.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.customer.CustomerName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-8">
+                                    @Html.LabelFor(model => model.customer.CustomerPhoneNumber, "Phone Number", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.customer.CustomerPhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.customer.CustomerPhoneNumber, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            @Html.EditorFor(model => model.customer.CustomerId, new { htmlAttributes = new { @class = "hidden" } })
+
+                            <ul class="list-inline pull-right">
+                                <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
+                            </ul>
+                            </div>
+                        <div class="tab-pane" role="tabpanel" id="step2">
+                            <h3 class="col-md-offset-4" style="margin-bottom:40px;">Add Products</h3>
+                            <div class="row">
+                               
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="productInput" class="col-2 col-form-label">Product</label>
+                                            <div class="col-10">
+                                                <input class="form-control" type="text" id="productInput">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="productInput" class="col-2 col-form-label">Available Stock</label>
+                                            <div class="col-10">
+                                                <input class="form-control" type="text" id="productQuantity" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="productInput" class="col-2 col-form-label">Base Price</label>
+                                            <div class="col-10">
+                                                <input class="form-control" type="text" id="productPrice" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input class="hidden" type="text" id="productId">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="productInput" class="col-2 col-form-label">Enter Quantity</label>
+                                            <div class="col-10">
+                                                <input class="form-control" type="text" id="productQuantityUser" value="0" name="Quantity">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-bottom:10px;">
+                                    
+                                    <div class="col-md-6 col-md-offset-3">
+                                        <div class="col-md-offset-4 col-md-5 ">
+                                            <button type="button" class="btn btn-lg btn-success" onclick="return addToCart();">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table id="tableList" class="table table-bordered table-hover table-striped" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Product Name
+                                            </th>
+                                            <th>
+                                                Base Price
+                                            </th>
+                                            <th>
+                                                Quantity
+                                            </th>
+                                            <th>
+                                                Price
+                                            </th>
+                                            <th>Action</th>
+                                            <th class="hidden" data-override="Product.ProductId">
+                                                ProductId
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cartBody">
+                                        
+                                    </tbody>
+                                </table>
 
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>OrderDTO</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.OrderId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OrderId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OrderId, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="row">
+                                <hr/>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="productInput" class="col-2 col-form-label">Enter total discount</label>
+                                        <div class="col-10">
+                                            <input class="form-control" type="text" id="userDiscount" value="0">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="list-inline pull-right">
+                                <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
+                                <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane" role="tabpanel" id="step3">
+                            
+
+                            <div class="row">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm-4 col-md-4">
+                                            <img src="http://www.ssidecisions.com/images/ssi_logo.svg" width="180px;" height="60px;" class="img-rounded logo">
+                                            <address id="invoiceCustomer">
+                                                <strong>SSI, Pakistan.</strong><br>
+                                                P.O Box 3171<br>
+                                                Kent, WA 98089<br>
+                                            </address>
+                                        </div>
+                                        <div class="well col-sm-4 col-md-offset-4 col-md-4">
+                                            <table class="invoice-head">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="pull-right"><strong>Name :&nbsp;</strong></td>
+                                                        <td id="tableCustName"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="pull-right"><strong>CNIC :&nbsp;</strong></td>
+                                                        <td id="tableCustCNIC"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="pull-right"><strong>Invoice :&nbsp;</strong></td>
+                                                        <td>2340</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="pull-right"><strong>Date :&nbsp;</strong></td>
+                                                        <td id="invoiceDate"></td>
+                                                    </tr>
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="span8">
+                                            <h2>Invoice</h2>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 invoice-body">
+                                            <table class="table table-bordered table-hover table-striped" cellspacing="0" >
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            Product Name
+                                                        </th>
+                                                        <th>
+                                                            Base Price
+                                                        </th>
+                                                        <th>
+                                                            Quantity
+                                                        </th>
+                                                        <th>
+                                                            Price
+                                                        </th>
+                                                        <th class="hidden">
+                                                            ProductId
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="invoiceTableBody" name="tableBody">
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-8 col-md-offset-2 col-md-8 well invoice-thank">
+                                            <h5 style="text-align:center;">Thank You!</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <ul class="list-inline pull-right">
+                                <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
+                                <li><button type="button" class="btn btn-primary btn-info-full next-step">Place order</button></li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane" role="tabpanel" id="complete">
+                            <div class="alert alert-success hidden" role="alert" id="successAlert">
+                                <h3>Complete</h3>
+                                You have successfully placed your order.
+                            </div>
+                            <div class="alert alert-danger hidden" role="alert" id="errorAlert">
+                                <h3>Error</h3>
+                                You have not successfully placed your order.
+                            </div>
+                            <ul class="list-inline pull-right" style="margin-top:20px;">
+                                <li class="hidden" id="btnFinish">@Html.ActionLink("Finish", "Index", "Order", new { @class = "btn btn-lg btn-success" })</li>
+                            </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                        
+                    </div>
+
+                }
+
+
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Discount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.Customer.CustomerId, "Customer", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Customer.CustomerId, new SelectList(customers, "CustomersId", "Name"), "-- Select Customer --", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Customer.CustomerId, "", new { @class = "text-danger" })
-
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+        </section>
     </div>
-}
+</div>
+
+
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+@section Scripts{
+    <script src="~/scripts/jquery.tabletojson.min.js"></script>
+    <script>
+        var count = 1;
+        var tableJson;
+        var orderJson = new Object();
+        $(document).ready(function () {
+            //Initialize tooltips
+            $('.nav-tabs > li a[title]').tooltip();
+            
+
+            //Wizard
+            $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+
+                var $target = $(e.target);
+
+                if ($target.parent().hasClass('disabled')) {
+                    return false;
+                }
+            });
+
+            $(".next-step").click(function (e) {
+
+                var $active = $('.wizard .nav-tabs li.active');
+                $active.next().removeClass('disabled');
+                nextTab($active);
+
+            });
+            $(".prev-step").click(function (e) {
+
+                var $active = $('.wizard .nav-tabs li.active');
+                prevTab($active);
+
+            });
+        });
+
+        function nextTab(elem) {
+            count++;
+            if(count == 3)
+            {
+                var sum = 0;
+                var d = new Date();
+                $('#invoiceTableBody').empty();
+                $('#cartBody').children().clone().appendTo('#invoiceTableBody');
+                $('#invoiceTableBody > tr > td:nth-child(5)').each(function () {
+                    $(this).attr("class", "hidden");
+                });
+                $('#invoiceTableBody > tr > td:nth-child(4)').each(function () {
+                    
+                    sum += parseInt($(this).html());
+
+                });
+                var valAfterDiscount = sum - parseInt($('#userDiscount').val());
+                $("#invoiceTableBody").append('<tr>' + '<td> &nbsp;</td>' + '<td> &nbsp;</td>' + '<td> <strong>Subtotal</strong></td>' + '<td>' + sum + '</td>' + '<td class="hidden" > <a href="javascript:void(0)" id= "' + $("#productId").val() + '" onclick="return removeFromCart(id)">Remove</a></td>' + '<td class ="hidden">' + $("#productId").val() + '</td>' + '</tr>');
+                $("#invoiceTableBody").append('<tr>' + '<td> &nbsp;</td>' + '<td> &nbsp;</td>' + '<td> <strong>Discount</strong></td>' + '<td>' + $('#userDiscount').val() + '</td>' + '<td class="hidden" > <a href="javascript:void(0)" id= "' + $("#productId").val() + '" onclick="return removeFromCart(id)">Remove</a></td>' + '<td class ="hidden">' + $("#productId").val() + '</td>' + '</tr>');
+                $("#invoiceTableBody").append('<tr>' + '<td> &nbsp;</td>' + '<td> &nbsp;</td>' + '<td> <strong>Total</strong></td>' + '<td>' + valAfterDiscount + '</td>' + '<td class="hidden"> <a  href="javascript:void(0)" id= "' + $("#productId").val() + '" onclick="return removeFromCart(id)">Remove</a></td>' + '<td class ="hidden">' + $("#productId").val() + '</td>' + '</tr>');
+
+                $("#tableCustCNIC").html($("#customer_CustomerCNIC").val());
+                $("#tableCustName").html($("#customer_CustomerName").val());
+                $("#invoiceDate").html(d.toUTCString());
+
+                table = $("#tableList").tableToJSON({
+                    ignoreColumns: [0, 1, 4]
+                });
+                
+                var customer = new Object();
+                customer.customerId = $("#customer_CustomerId").val();
+                customer.customerName = $("#customer_CustomerName").val();
+                customer.customerPhoneNumber = $("#customer_CustomerPhoneNumber").val();
+                customer.customerCNIC = $("#customer_CustomerCNIC").val();
+                
+                var order = new Object();
+                order.date = d.toUTCString();
+                order.discount = $('#userDiscount').val();
+
+                orderJson.orderDetail = table;
+                orderJson.customer = customer;
+                orderJson.order = order;
+
+            }
+            if (count == 4)
+            {
+                $("#successAlert").addClass("hidden");
+                $("#errorAlert").addClass("hidden");
+                $("#btnFinish").addClass("hidden");
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Create", "Order")',
+                    data: JSON.stringify(orderJson),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: successFunc,
+                    error: errorFunc
+                });
+
+                function successFunc(data, status) {
+                    if (data = "Successfully added")
+                    {
+                        $("#successAlert").removeClass("hidden");
+                        $("#btnFinish").removeClass("hidden");
+                    }
+                    else {
+                        $("#errorAlert").removeClass("hidden");
+                    }
+                    
+                }
+
+                function errorFunc() {
+                    alert('error');
+                }
+               
+            }
+            $(elem).next().find('a[data-toggle="tab"]').click();
+        }
+        function prevTab(elem) {
+            $(elem).prev().find('a[data-toggle="tab"]').click();
+            count--;
+        }
+
+        $(function () {
+            var projects = [
+                @for (int i = 0; i < customers.Count; i++)
+                {
+
+                    if(i != customers.Count -1)
+                    {
+                        <text>
+                        {
+                            value: "@customers[i].CustomerName",
+                            label: "@customers[i].CustomerCNIC",
+                            id: "@customers[i].CustomerId",
+                            desc: "@customers[i].CustomerPhoneNumber"
+                        },
+                      </text>
+
+                    }
+                    else
+                    {
+                         <text>
+                            {
+                                value: "@customers[i].CustomerName",
+                                label: "@customers[i].CustomerCNIC",
+                                id: "@customers[i].CustomerId",
+                                desc: "@customers[i].CustomerPhoneNumber"
+                            }
+                        </text>
+                        break;
+                    }
+
+
+                }
+            ];
+
+            $("#customer_CustomerCNIC").autocomplete({
+                minLength: 0,
+                source: projects,
+                focus: function (event, ui) {
+                    $("#customer_CustomerCNIC").val(ui.item.label);
+                    return false;
+                },
+                select: function (event, ui) {
+                    $("#customer_CustomerCNIC").val(ui.item.label);
+                    $("#customer_CustomerName").val(ui.item.value);
+                    $("#customer_CustomerPhoneNumber").val(ui.item.desc);
+                    $("#customer_CustomerId").val(ui.item.id);
+                    return false;
+                },
+                change: function (event, ui) {
+                    try {
+                        if (typeof (ui.item.label) !== "undefined" || typeof (ui.item.label) !== null) {
+                            $("#customer_CustomerCNIC").val(ui.item.label);
+                            $("#customer_CustomerName").val(ui.item.value);
+                            $("#customer_CustomerPhoneNumber").val(ui.item.desc);
+                            $("#customer_CustomerId").val(ui.item.id);
+                        }
+                    } catch (e) {
+                        $("#customer_CustomerId").val("");
+                    }
+      
+                    return false;
+                }
+            })
+        });
+
+
+        $(function () {
+            var productsData = [
+                @for (int i = 0; i < products.Count; i++)
+                {
+
+                    if(i != products.Count -1)
+                    {
+                        <text>
+                        {
+                            value: "@products[i].Name",
+                            label: "@products[i].Name",
+                            id: "@products[i].ProductId",
+                            quantity: "@products[i].Quantity",
+                            basePrice: "@products[i].Price"
+                        },
+                      </text>
+                        
+                    }
+                    else
+                    {
+                         <text>
+                            {
+                                value: "@products[i].Name",
+                                label: "@products[i].Name",
+                                id: "@products[i].ProductId",
+                                quantity: "@products[i].Quantity",
+                                basePrice: "@products[i].Price"
+                            }
+                        </text>
+                        break;
+                    }
+
+                }
+            ];
+
+            $("#productInput").autocomplete({
+                minLength: 0,
+                source: productsData,
+                focus: function (event, ui) {
+                    $("#productInput").val(ui.item.label);
+                    return false;
+                },
+                select: function (event, ui) {
+                    $("#productInput").val(ui.item.label);
+                    $("#productPrice").val(ui.item.basePrice);
+                    $("#productQuantity").val(ui.item.quantity);
+                    $("#productId").val(ui.item.id);
+                    return false;
+                }
+            })
+        });
+
+        function addToCart()
+        {
+            $("#cartBody").append('<tr>' + '<td>' + $("#productInput").val() + '</td>' + '<td>' + $("#productPrice").val() + '</td>' + '<td>' + $("#productQuantityUser").val() + '</td>' + '<td>' + $("#productQuantityUser").val() * $("#productPrice").val() + '</td>' + '<td> <a href="javascript:void(0)" id= "' + $("#productId").val() + '" onclick="return removeFromCart(id)">Remove</a></td>' + '<td class ="hidden">' + $("#productId").val() + '</td>' + '</tr>');
+            $("#productInput").val("");
+            $("#productPrice").val("");
+            $("#productQuantity").val("");
+            $("#productQuantityUser").val("");
+        }
+        
+        function removeFromCart(id)
+        {
+            $("#tableList #" + id).closest('tr').remove();
+            return false;
+        }
+        
+
+
+    </script>
+    
+}

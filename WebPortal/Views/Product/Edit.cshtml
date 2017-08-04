@@ -1,12 +1,11 @@
 ﻿@model Entities.ProductDTO
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Product";
+    ViewBag.SubTitle = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<Entities.CategoryDTO> categories = ViewBag.Categories;
 }
-
-<h2>Edit</h2>
 
 
 @using (Html.BeginForm())
@@ -14,7 +13,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>ProductDTO</h4>
+        <h4>Product</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         

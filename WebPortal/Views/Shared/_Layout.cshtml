@@ -1,69 +1,101 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
     <title>@ViewBag.Title</title>
-    <link rel="icon" href="http://www.ssidecisions.com/favicon.ico" type="image/x-icon" />
-    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <link rel="icon" href="http://www.foodserve.com/images/pos-icon.gif" type="image/x-icon" />
+    <link href="~/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Content/css/sb-admin.css" rel="stylesheet">
+    <link href="~/Content/site.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header" style="background-color:#4CAF50; padding-left:15px;margin-bottom:0px;">
-                @Html.ActionLink("Task by Sir Umer", "Index", "NHibernate", new { area = "" }, new { @class = "navbar-brand", @style = "color:#FFFFFF;" })
+    <div id="wrapper">
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Point of Sale", "Index", "Home", new { area = "" }, new { @class = "navbar-brand"})
             </div>
-            <div class="navbar-collapse collapse">
+            @{Html.RenderPartial("TopMenu");}
 
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">NHibernate<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Products", "Index", "NHibernate")</li>
-                            <li>@Html.ActionLink("Orders", "Order", "NHibernate")</li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">HighCharts<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Pie Chart", "PieChart", "HighCharts")</li>
-                            <li>@Html.ActionLink("Line Chart", "LineChart", "HighCharts")</li>
-                            <li>@Html.ActionLink("Time Series", "TimeSeriesChart", "HighCharts")</li>
-                            <li>@Html.ActionLink("Stack Bar Chart", "StackBarChart", "HighCharts")</li>
-                            <li>@Html.ActionLink("Donut 3D Chart", "Donut3DChart", "HighCharts")</li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ignite UI <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Grid View", "Index", "Ignite")</li>
-                        </ul>
-                    </li>
-                </ul>
-
+            @{Html.RenderPartial("SideMenu");}
+        </nav>
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            @ViewBag.Title
+                            <small>@ViewBag.SubTitle</small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-dashboard"></i>  @Html.ActionLink("Dashboard", "Index", "Home")
+                            </li>
+                            <li class="active">
+                                @if (ViewBag.Title == "Product")
+                                {
+                                    <i class="fa fa-th-list"></i> @ViewBag.SubTitle;
+                                }
+                                else if (ViewBag.Title == "Order")
+                                {
+                                    <i class="fa fa-shopping-cart"></i> @ViewBag.SubTitle;
+                                }
+                                else if (ViewBag.Title == "Category")
+                                {
+                                    <i class="fa fa-folder-open-o"></i> @ViewBag.SubTitle;
+                                }
+                                else if (ViewBag.Title == "Customer")
+                                {
+                                    <i class="fa fa-thumbs-o-up"></i> @ViewBag.SubTitle;
+                                }
+                                else if (ViewBag.Title == "Stock")
+                                {
+                                    <i class="fa fa-briefcase"></i> @ViewBag.SubTitle;
+                                }
+                                else
+                                {
+                                    <i class="fa fa-user"></i> @ViewBag.SubTitle;
+                                }
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        @RenderBody()
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-
-    </div>
-
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+            crossorigin="anonymous"></script>
+    <script src="~/scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/scripts/jquery.validate.min.js"></script>
+    <script src="~/scripts/jquery.validate.unobtrusive.min.js"></script>>
+    <script src="~/scripts/modernizr-2.7.2.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
     @RenderSection("Scripts", false)
-
-    <div class="container">
-        <footer class="container" style="width:100%; position:absolute;bottom:0px;">
-            <hr />
-            <p>&copy; @DateTime.Now.Year - SSI - Developed by Taimoor Raza</p>
-        </footer>
-    </div>
-
 
 </body>
 </html>

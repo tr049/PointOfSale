@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.IProviders
 {
-    public interface IProduct : IProductProvider
+    public interface IProduct
     {
         ProductDTO GetProductById(int id);
         IList<ProductDTO> GetAllProducts();
         int AddProduct(ProductDTO dto);
         int DeleteProduct(ProductDTO dto);
         int UpdateProduct(ProductDTO dto);
+        IList<ProductStockDTO> AvailableProductInStock();
 
     }
 }

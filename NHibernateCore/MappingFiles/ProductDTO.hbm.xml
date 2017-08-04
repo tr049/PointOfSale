@@ -9,11 +9,18 @@
     <property name="Name" column="name"/>
     <property name="Description" column="description"/>
     <property name="Price" column="price"/>
-    <property name="Quantity" column="quantity"/>
     <many-to-one name="Category" class="CategoryDTO" column="categoryId" unique="true"/>
     <bag name="OrderDetails" inverse="true" generic="true" lazy="true" fetch="subselect">
       <key column="productId"/>
       <one-to-many class="OrderDetailDTO" />
+    </bag>
+    <bag name="StockIns" inverse="true" generic="true" lazy="true" fetch="subselect">
+      <key column="productId"/>
+      <one-to-many class="StockInDTO" />
+    </bag>
+    <bag name="StockOuts" inverse="true" generic="true" lazy="true" fetch="subselect">
+      <key column="orderDetailId"/>
+      <one-to-many class="StockOutDTO" />
     </bag>
   </class>
 

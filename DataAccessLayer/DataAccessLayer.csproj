@@ -53,12 +53,15 @@
     <Compile Include="Data Provider\OrderDetailProvider.cs" />
     <Compile Include="Data Provider\OrderProvider.cs" />
     <Compile Include="Data Provider\ProductProvider.cs" />
+    <Compile Include="Data Provider\StockInProvider.cs" />
+    <Compile Include="Data Provider\StockOutProvider.cs" />
     <Compile Include="IProviders\ICategory.cs" />
     <Compile Include="IProviders\ICustomer.cs" />
     <Compile Include="IProviders\IOrder.cs" />
     <Compile Include="IProviders\IOrderDetail.cs" />
     <Compile Include="IProviders\IProduct.cs" />
-    <Compile Include="IProviders\IProvider.cs" />
+    <Compile Include="IProviders\IStockIn.cs" />
+    <Compile Include="IProviders\IStockOut.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

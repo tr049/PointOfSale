@@ -25,7 +25,7 @@ namespace DataAccessLayer.Data_Provider
             {
                 session.Save(dto);
                 session.Transaction.Commit();
-                return 1;
+                return dto.CustomerId;
             }
         }
 

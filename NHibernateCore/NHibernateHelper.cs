@@ -29,12 +29,19 @@ namespace NHibernateCore
             var orderDetailConfigurationFile = HttpContext.Current.Server.MapPath(@"~\bin\MappingFiles\OrderDetailDTO.hbm.xml");
             var customerConfigurationFile = HttpContext.Current.Server.MapPath(@"~\bin\MappingFiles\CustomerDTO.hbm.xml");
             var categoryConfigurationFile = HttpContext.Current.Server.MapPath(@"~\bin\MappingFiles\CategoryDTO.hbm.xml");
+            var userConfigurationFile = HttpContext.Current.Server.MapPath(@"~\bin\MappingFiles\UserDTO.hbm.xml");
+            var stockInConfigurationFile = HttpContext.Current.Server.MapPath(@"~\bin\MappingFiles\StockInDTO.hbm.xml");
+            var stockOutConfigurationFile = HttpContext.Current.Server.MapPath(@"~\bin\MappingFiles\StockOutDTO.hbm.xml");
 
             configuration.AddFile(productConfigurationFile);
             configuration.AddFile(orderConfigurationFile);
             configuration.AddFile(orderDetailConfigurationFile);
             configuration.AddFile(customerConfigurationFile);
             configuration.AddFile(categoryConfigurationFile);
+            configuration.AddFile(userConfigurationFile);
+            configuration.AddFile(stockInConfigurationFile);
+            configuration.AddFile(stockOutConfigurationFile);
+
             factory = configuration.BuildSessionFactory();
 
             session = factory.OpenSession();
@@ -44,23 +51,7 @@ namespace NHibernateCore
         {
             return session;
         }
-
-        public IList<ProductDTO> GetAllProducts()
-        {
-            using (session.BeginTransaction())
-            {
-                List<ProductDTO> ProductDTOs = (List<ProductDTO>)session.CreateCriteria<ProductDTO>().List<ProductDTO>();
-                return ProductDTOs;
-            }
-        }
-        public void AddProductDTO(ProductDTO obj)
-        {
-            using (session.BeginTransaction())
-            {
-                session.Save(obj);
-                session.Transaction.Commit();
-            }
-        }
+        
 
     }
 }

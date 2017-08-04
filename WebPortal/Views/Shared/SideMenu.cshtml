@@ -1,0 +1,65 @@
+﻿<div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav side-nav">
+        <li @if (ViewBag.Title == "Dashboard") { <text>class= "active"</text> }>
+            <a href="@Url.Action("Index", "Home")"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+        </li>
+        <li @if (ViewBag.Title == "Product") { <text>class= "active"</text> }>
+            <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-briefcase"></i> Product<i class="fa fa-fw fa-caret-down"></i></a>
+            <ul id="demo" class="collapse">
+                <li>
+                    @Html.ActionLink("Add Product", "Create", "Product")
+                </li>
+                <li>
+                    @Html.ActionLink("Check Products", "Index", "Product")
+                </li>
+            </ul>
+        </li>
+        <li @if (ViewBag.Title == "Stock") { <text> class="active" </text>  }>
+            <a href="javascript:;" data-toggle="collapse" data-target="#demo4"><i class="fa fa-fw fa-th-list"></i> Inventory <i class="fa fa-fw fa-caret-down"></i></a>
+            <ul id="demo4" class="collapse">
+                <li>
+                    @Html.ActionLink("Add in stock", "Create", "Stock")
+                </li>
+                <li>
+                    @Html.ActionLink("Check Stock", "Index", "Stock")
+                </li>
+            </ul>
+        </li>
+        <li @if (ViewBag.Title == "Category") { <text>class= "active"</text> }>
+            <a href="javascript:;" data-toggle="collapse" data-target="#demo3"><i class="fa fa-fw fa-folder-open-o"></i> Product's categories <i class="fa fa-fw fa-caret-down"></i></a>
+            <ul id="demo3" class="collapse">
+                <li>
+                    @Html.ActionLink("Add Category", "Create", "Category")
+                </li>
+                <li>
+                    @Html.ActionLink("View all categories", "Index", "Category")
+                </li>
+            </ul>
+        </li>
+        <li @if (ViewBag.Title == "Customer") { <text>class= "active"</text> }>
+            <a href="javascript:;" data-toggle="collapse" data-target="#demo1"><i class="fa fa-fw fa-thumbs-o-up"></i> Customer <i class="fa fa-fw fa-caret-down"></i></a>
+            <ul id="demo1" class="collapse">
+                <li>
+                    @Html.ActionLink("Add Customer", "Create", "Customer")
+                </li>
+                <li>
+                    @Html.ActionLink("View all customer", "Index", "Customer")
+                </li>
+            </ul>
+        </li>
+        <li @if (ViewBag.Title == "Order") { <text>class= "active"</text> }>
+            <a href="javascript:;" data-toggle="collapse" data-target="#demo2"><i class="fa fa-fw fa-shopping-cart"></i> Order <i class="fa fa-fw fa-caret-down"></i></a>
+            <ul id="demo2" class="collapse">
+                <li>
+                    @Html.ActionLink("Add Order", "Create", "Order")
+                </li>
+                <li>
+                    @Html.ActionLink("View all orders", "Index", "Order")
+                </li>
+            </ul>
+        </li>
+        <li @if (ViewBag.Title == "Profile") { <text>class= "active"</text> }>
+            <a href="@Url.Action("Index", "User")"><i class="fa fa-fw fa-user"></i> Profile</a>
+        </li>
+    </ul>
+</div>

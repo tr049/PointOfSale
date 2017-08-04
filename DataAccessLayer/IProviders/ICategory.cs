@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.IProviders
 {
-    public interface ICategory: IProductProvider
+    public interface ICategory
     {
         CategoryDTO GetCategoryById(int id);
         IList<CategoryDTO> GetAllCategorys();

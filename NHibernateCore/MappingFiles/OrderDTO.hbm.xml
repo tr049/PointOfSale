@@ -2,15 +2,15 @@
 
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Entities" namespace="Entities" auto-import="true">
 
-  <class name="OrderDTO" table="Order">
+  <class name="OrderDTO" table="Orders">
     <id name="OrderId" column ="OrderId">
       <generator class="native"/>
     </id>
     <property name="Discount" column="discount"/>
     <property name="Date" column="date"/>
     <many-to-one name="Customer" class="CustomerDTO" column="customerId" unique="true"/>
-    <bag name="OrderDetails" inverse="true" generic="true" lazy="true" fetch="subselect">
-      <key column="OrderId"/>
+    <bag name="OrderDetails" inverse="true" generic="true" fetch="subselect">
+      <key column="orderId"/>
       <one-to-many class="OrderDetailDTO" />
     </bag>
   </class>

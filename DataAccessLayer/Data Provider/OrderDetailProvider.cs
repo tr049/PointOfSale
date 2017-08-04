@@ -1,6 +1,7 @@
 ﻿using DataAccessLayer.IProviders;
 using Entities;
 using NHibernate;
+using NHibernate.Transform;
 using NHibernateCore;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace DataAccessLayer.Data_Provider
             {
                 session.Save(dto);
                 session.Transaction.Commit();
-                return 1;
+                return dto.OrderDetailId;
             }
         }
 
@@ -44,8 +45,8 @@ namespace DataAccessLayer.Data_Provider
         {
             using (session.BeginTransaction())
             {
-                List<OrderDetailDTO> OrderDetailDTOs = (List<OrderDetailDTO>)session.CreateCriteria<OrderDetailDTO>().List<OrderDetailDTO>();
-                return OrderDetailDTOs;
+                List<OrderDetailDTO> OrderDTOs = (List<OrderDetailDTO>)session.CreateCriteria<OrderDetailDTO>().List<OrderDetailDTO>();
+                return OrderDTOs;
             }
         }
 

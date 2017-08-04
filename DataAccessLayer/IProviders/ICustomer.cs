@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.IProviders
 {
-    public interface ICustomer : IProductProvider
+    public interface ICustomer 
     {
         CustomerDTO GetCustomerById(int id);
         IList<CustomerDTO> GetAllCustomers();

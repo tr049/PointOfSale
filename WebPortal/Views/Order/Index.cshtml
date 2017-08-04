@@ -1,52 +1,78 @@
 ﻿@model IEnumerable<Entities.OrderDTO>
-
+@using Repositories;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Order";
+    ViewBag.SubTitle = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    MyRepository repo = new MyRepository();
+    
 }
 
-<h2>Index</h2>
+<h2>All Orders</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.OrderId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Discount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Customer.CustomerId)
-        </th>
-        <th></th>
-    </tr>
+<table id="tableList" class="table table-bordered table-hover table-striped" cellspacing="0">
+    <thead>
+        <tr>
+            <th>
+                Order Id
+            </th>
+            <th>
+                Customer Name
+            </th>
+            <th>
+                Total Price
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Discount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.OrderId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Discount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Customer.CustomerId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.OrderId }) |
-            @Html.ActionLink("Details", "Details", new { id = item.OrderId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.OrderId })
-        </td>
-    </tr>
-}
+            <th>Actions</th>
+        </tr>
+        </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.CustomerName)
+                </td>
+                <td>
+                    @{
+                        double sum = repo.GetOrder(item.OrderId).OrderDetails.Sum(x => x.Price);
+                        <text>@sum</text>
+                    }
+                    
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Discount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.OrderId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.OrderId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.OrderId })
+                </td>
+            </tr>
+        }
+    </tbody>
 
 </table>
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            $("#tableList").dataTable();
+        })
+    </script>
+
+}

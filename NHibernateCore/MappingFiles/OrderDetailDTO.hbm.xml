@@ -8,9 +8,12 @@
     </id>
     <property name="Price" column="price"/>
     <property name="Quantity" column="quantity"/>
-    <many-to-one name="Order" class="OrderDTO" column="OrderId" unique="true"/>
+    <many-to-one name="Order" class="OrderDTO" column="orderId"/>
     <many-to-one name="Product" class="ProductDTO" column="productId" unique="true"/>
-    
+    <bag name="StockOuts" inverse="true" generic="true" fetch="subselect">
+      <key column="orderDetailId"/>
+      <one-to-many class="StockOutDTO" />
+    </bag>
   </class>
 
 

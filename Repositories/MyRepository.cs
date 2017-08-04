@@ -40,6 +40,12 @@ namespace Repositories
             return provider.GetAllProducts();
         }
 
+        public IList<ProductStockDTO> GetAvailableProducts()
+        {
+            ProductProvider provider = new ProductProvider();
+            return provider.AvailableProductInStock();
+        }
+
         public int UpdateProduct(ProductDTO obj)
         {
             ProductProvider provider = new ProductProvider();
@@ -176,7 +182,17 @@ namespace Repositories
         public int DeleteOrder(int id)
         {
             OrderProvider provider = new OrderProvider();
-            var obj = provider.GetOrderById(id);
+            OrderDTO obj = provider.GetOrderById(id);
+            var orderDet = new OrderDetailProvider();
+            foreach (var det in obj.OrderDetails)
+            {
+                var stPro = new StockOutProvider();
+                foreach (var stOut in det.StockOuts)
+                {
+                    stPro.DeleteStockOut(stOut);
+                }
+                orderDet.DeleteOrderDetail(det);
+            }
             if ( obj != null)
             {
                 provider.DeleteOrder(obj);
@@ -222,6 +238,92 @@ namespace Repositories
             if ( obj != null)
             {
                 provider.DeleteOrderDetail(obj);
+                return 1;
+            }
+            return -1;
+        }
+
+        //StockIn Functions
+
+        public int AddStockIn(StockInDTO obj)
+        {
+            StockInProvider provider = new StockInProvider();
+            if (provider.GetStockInById(obj.StockInId) == null)
+            {
+                provider.AddStockIn(obj);
+                return 1;
+            }
+            return -1;
+        }
+
+        public StockInDTO GetStockIn(int id)
+        {
+            StockInProvider provider = new StockInProvider();
+            return provider.GetStockInById(id);
+        }
+
+        public IList<StockInDTO> GetStockIns()
+        {
+            StockInProvider provider = new StockInProvider();
+            return provider.GetAllStockIns();
+        }
+
+        public int UpdateStockIn(StockInDTO obj)
+        {
+            StockInProvider provider = new StockInProvider();
+            return provider.UpdateStockIn(obj);
+        }
+
+        public int DeleteStockIn(int id)
+        {
+            StockInProvider provider = new StockInProvider();
+            var obj = provider.GetStockInById(id);
+            if (obj != null)
+            {
+                provider.DeleteStockIn(obj);
+                return 1;
+            }
+            return -1;
+        }
+
+        //StockOut Functions
+
+        public int AddStockOut(StockOutDTO obj)
+        {
+            StockOutProvider provider = new StockOutProvider();
+            if (provider.GetStockOutById(obj.StockOutId) == null)
+            {
+                provider.AddStockOut(obj);
+                return 1;
+            }
+            return -1;
+        }
+
+        public StockOutDTO GetStockOut(int id)
+        {
+            StockOutProvider provider = new StockOutProvider();
+            return provider.GetStockOutById(id);
+        }
+
+        public IList<StockOutDTO> GetStockOuts()
+        {
+            StockOutProvider provider = new StockOutProvider();
+            return provider.GetAllStockOuts();
+        }
+
+        public int UpdateStockOut(StockOutDTO obj)
+        {
+            StockOutProvider provider = new StockOutProvider();
+            return provider.UpdateStockOut(obj);
+        }
+
+        public int DeleteStockOut(int id)
+        {
+            StockOutProvider provider = new StockOutProvider();
+            var obj = provider.GetStockOutById(id);
+            if (obj != null)
+            {
+                provider.DeleteStockOut(obj);
                 return 1;
             }
             return -1;

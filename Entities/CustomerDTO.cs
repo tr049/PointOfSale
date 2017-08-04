@@ -29,7 +29,15 @@ namespace Entities
 
         public override bool Equals(object obj)
         {
-            return ((CustomerDTO)obj).CustomerId == CustomerId;
+            try
+            {
+                return ((CustomerDTO)obj).CustomerId == CustomerId;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }       
         }
         public override int GetHashCode()
         {

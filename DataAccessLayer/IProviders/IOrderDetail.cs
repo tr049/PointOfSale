@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.IProviders
 {
-    public interface IOrderDetail : IProductProvider
+    public interface IOrderDetail
     {
         OrderDetailDTO GetOrderDetailById(int id);
         IList<OrderDetailDTO> GetAllOrderDetails();

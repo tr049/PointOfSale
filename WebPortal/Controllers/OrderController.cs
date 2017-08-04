@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft;
+using WebPortal.Models;
 
 namespace WebPortal.Controllers
 {
@@ -27,23 +29,52 @@ namespace WebPortal.Controllers
         // GET: Order/Create
         public ActionResult Create()
         {
+            MyRepository repository = new MyRepository();
+            ViewBag.Customers = repository.GetCustomers().ToList();
+            ViewBag.Products = repository.GetAvailableProducts().ToList();
             return View();
         }
 
         // POST: Order/Create
         [HttpPost]
-        public ActionResult Create(OrderDTO obj)
+        public JsonResult Create(BigModelDTO obj)
         {
             try
             {
                 MyRepository repository = new MyRepository();
-                repository.AddOrder(obj);
-                ViewBag.Customers = repository.GetCustomers();
-                return RedirectToAction("Index");
+                obj.order.Customer = new CustomerDTO();
+                if (obj.customer.CustomerId == 0)
+                {
+                    
+                    obj.order.Customer.CustomerId = repository.AddCustomer(obj.customer);
+                }
+                obj.order.Customer.CustomerId = obj.customer.CustomerId;
+                repository.AddOrder(obj.order);
+                int orderId = obj.order.OrderId;
+                foreach (var orderDetail in obj.orderDetail)
+                {
+                    orderDetail.Order = new OrderDTO();
+                    orderDetail.Order.OrderId = orderId;
+                    repository.AddOrderDetail(orderDetail);
+                    int orderDetailId = orderDetail.OrderDetailId;
+
+                    StockOutDTO stockOut = new StockOutDTO();
+                    stockOut.Date = obj.order.Date;
+                    stockOut.Description = "Simple Order";
+                    stockOut.Product = new ProductDTO();
+                    stockOut.Product.ProductId = orderDetail.Product.ProductId;
+                    stockOut.Quantity = orderDetail.Quantity;
+                    stockOut.OrderDetail = new OrderDetailDTO();
+                    stockOut.OrderDetail.OrderDetailId = orderDetailId;
+
+                    repository.AddStockOut(stockOut);
+
+                }
+                return Json("Successfully added", JsonRequestBehavior.AllowGet);
             }
             catch
             {
-                return View();
+                return Json("Error while adding", JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -51,46 +82,70 @@ namespace WebPortal.Controllers
         public ActionResult Edit(int id)
         {
             MyRepository repository = new MyRepository();
+            ViewBag.Customers = repository.GetCustomers().ToList();
+            ViewBag.Products = repository.GetAvailableProducts().ToList();
             return View(repository.GetOrder(id));
         }
 
         // POST: Order/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, OrderDTO obj)
+        public JsonResult Edit(int id, BigModelDTO obj)
         {
             try
             {
                 MyRepository repository = new MyRepository();
-                repository.UpdateOrder(obj);
+                repository.DeleteOrder(id);
+                obj.order.Customer = new CustomerDTO();
+                if (obj.customer.CustomerId == 0)
+                {
 
-                return RedirectToAction("Index");
+                    obj.order.Customer.CustomerId = repository.AddCustomer(obj.customer);
+                }
+                obj.order.Customer.CustomerId = obj.customer.CustomerId;
+                repository.AddOrder(obj.order);
+                int orderId = obj.order.OrderId;
+                foreach (var orderDetail in obj.orderDetail)
+                {
+                    orderDetail.Order = new OrderDTO();
+                    orderDetail.Order.OrderId = orderId;
+                    repository.AddOrderDetail(orderDetail);
+                    int orderDetailId = orderDetail.OrderDetailId;
+
+                    StockOutDTO stockOut = new StockOutDTO();
+                    stockOut.Date = obj.order.Date;
+                    stockOut.Description = "Simple Order";
+                    stockOut.Product = new ProductDTO();
+                    stockOut.Product.ProductId = orderDetail.Product.ProductId;
+                    stockOut.Quantity = orderDetail.Quantity;
+                    stockOut.OrderDetail = new OrderDetailDTO();
+                    stockOut.OrderDetail.OrderDetailId = orderDetailId;
+
+                    repository.AddStockOut(stockOut);
+
+                }
+                return Json("Successfully added", JsonRequestBehavior.AllowGet);
             }
             catch
             {
-                return View();
+                return Json("Error while adding", JsonRequestBehavior.AllowGet);
             }
         }
 
         // GET: Order/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            MyRepository repository = new MyRepository();
+            return View(repository.GetOrder(id));
         }
 
         // POST: Order/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, OrderDTO obj)
         {
-            try
-            {
                 MyRepository repository = new MyRepository();
                 repository.DeleteOrder(id);
                 return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            
         }
     }
 }

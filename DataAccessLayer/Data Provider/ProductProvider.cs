@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Entities;
 using NHibernateCore;
 using NHibernate;
+using NHibernate.Transform;
 
 namespace DataAccessLayer.Data_Provider
 {
@@ -28,7 +29,18 @@ namespace DataAccessLayer.Data_Provider
                 return 1;
             }
         }
-        
+
+        public IList<ProductStockDTO> AvailableProductInStock()
+        {
+            IQuery query = session.CreateSQLQuery(@"select p.productId as ProductId, result.quantity as Quantity, p.name as Name, p.description as Description, p.price as Price
+from(select  s.productId , (s.quantity - p.quantity) as quantity
+from (select s.productId, sum(s.quantity) as quantity from dbo.stockIn as s group by s.productId) as s, (select p.productId, sum(p.quantity) as quantity from dbo.stockOut as p group by p.productId) as p
+where s.productId = p.productId ) as result, dbo.Product as p
+where result.quantity > 0 and result.productId = p.productId").SetResultTransformer(Transformers.AliasToBean<ProductStockDTO>());
+
+            return query.List<ProductStockDTO>();
+        }
+
         public int DeleteProduct(ProductDTO dto)
         {
             using (session.BeginTransaction())
@@ -67,9 +79,10 @@ namespace DataAccessLayer.Data_Provider
                 ProductDTO old = session.Get<ProductDTO>(dto.ProductId);
                 old.Name = dto.Name;
                 old.Price = dto.Price;
-                old.Quantity = dto.Quantity;
                 old.Description = dto.Description;
                 old.Category = dto.Category;
+                old.StockIns = dto.StockIns;
+                old.StockOuts = dto.StockOuts;
                 session.Update(old);
                 session.Transaction.Commit();
                 return 1;
