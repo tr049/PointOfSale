@@ -1,0 +1,4 @@
+select  s.productId , (s.quantity - p.quantity) as quantity
+from (select s.productId, sum(s.quantity) as quantity from dbo.stockIn as s group by s.productId) as s 
+LEFT JOIN (select p.productId, sum(p.quantity) as quantity from dbo.stockOut as p group by p.productId) as p
+on s.productId = p.productId 
