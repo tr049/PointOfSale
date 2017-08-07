@@ -3,10 +3,10 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Entities" namespace="Entities" auto-import="true">
 
   <class name="OrderDetailDTO" table="OrderDetail">
-    <id name="OrderDetailId" column ="ProductId">
+    <id name="OrderDetailId" column ="orderDetailId">
       <generator class="native"/>
     </id>
-    <property name="Price" column="price"/>
+    <property name="Amount" column="amount"/>
     <property name="Quantity" column="quantity"/>
     <many-to-one name="Order" class="OrderDTO" column="orderId"/>
     <many-to-one name="Product" class="ProductDTO" column="productId" unique="true"/>

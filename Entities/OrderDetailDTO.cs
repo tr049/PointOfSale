@@ -9,7 +9,7 @@ namespace Entities
     public class OrderDetailDTO
     {
         public virtual int OrderDetailId { get; set; }
-        public virtual double Price { get; set; }
+        public virtual double Amount { get; set; }
         public virtual int Quantity { get; set; }
         public virtual OrderDTO Order { get; set; }
         public virtual IList<StockOutDTO> StockOuts { get; set; }

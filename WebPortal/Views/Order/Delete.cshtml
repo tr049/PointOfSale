@@ -72,7 +72,7 @@
                 Quantity
             </th>
             <th>
-                Price
+                Amount
             </th>
         </tr>
          @foreach (var item in Model.OrderDetails)
@@ -85,7 +85,7 @@
                         @Html.DisplayFor(modelItem => item.Quantity)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Price)
+                        @Html.DisplayFor(modelItem => item.Amount)
                     </td>
                 </tr>
             }

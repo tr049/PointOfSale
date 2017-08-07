@@ -9,6 +9,7 @@
     <property name="Date" column="date"/>
     <property name="Description" column="description"/>
     <property name="Quantity" column="quantity"/>
+    <property name="Price" column="price"/>
     <many-to-one name="Product" class="ProductDTO" column="productId" unique="true"/>
     <many-to-one name="OrderDetail" class="OrderDetailDTO" column="orderDetailId" unique="true"/>
 

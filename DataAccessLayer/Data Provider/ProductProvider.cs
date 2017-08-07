@@ -32,11 +32,12 @@ namespace DataAccessLayer.Data_Provider
 
         public IList<ProductStockDTO> AvailableProductInStock()
         {
-            IQuery query = session.CreateSQLQuery(@"select p.productId as ProductId, result.quantity as Quantity, p.name as Name, p.description as Description, p.price as Price
-from(select  s.productId , (s.quantity - p.quantity) as quantity
-from (select s.productId, sum(s.quantity) as quantity from dbo.stockIn as s group by s.productId) as s, (select p.productId, sum(p.quantity) as quantity from dbo.stockOut as p group by p.productId) as p
-where s.productId = p.productId ) as result, dbo.Product as p
-where result.quantity > 0 and result.productId = p.productId").SetResultTransformer(Transformers.AliasToBean<ProductStockDTO>());
+            IQuery query = session.CreateSQLQuery(@"select pd.productId as ProductId, result.quantity as Quantity, pd.name as Name, pd.description as Description, pd.categoryId as CategoryId, result.price as Price
+from(select  s.productId , (ISNULL(s.quantity,0) - ISNULL(p.quantity,0)) as quantity, s.price as price
+from (select s.productId, sum(s.quantity) as quantity, (sum(s.price) / sum(s.quantity)) as price from dbo.stockIn as s group by s.productId) as s 
+LEFT JOIN (select p.productId, sum(p.quantity) as quantity from dbo.stockOut as p group by p.productId) as p
+on s.productId = p.productId) as result, dbo.Product as pd
+where result.quantity > 0 and result.productId = pd.productId").SetResultTransformer(Transformers.AliasToBean<ProductStockDTO>());
 
             return query.List<ProductStockDTO>();
         }
@@ -78,7 +79,6 @@ where result.quantity > 0 and result.productId = p.productId").SetResultTransfor
             {
                 ProductDTO old = session.Get<ProductDTO>(dto.ProductId);
                 old.Name = dto.Name;
-                old.Price = dto.Price;
                 old.Description = dto.Description;
                 old.Category = dto.Category;
                 old.StockIns = dto.StockIns;

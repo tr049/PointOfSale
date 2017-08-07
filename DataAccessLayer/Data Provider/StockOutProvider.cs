@@ -69,6 +69,7 @@ namespace DataAccessLayer.Data_Provider
                 old.Description = dto.Description;
                 old.OrderDetail = dto.OrderDetail;
                 old.Quantity = dto.Quantity;
+                old.Price = dto.Price;
                 old.Product = dto.Product;
                 session.SaveOrUpdate(old);
                 session.Transaction.Commit();

@@ -11,6 +11,7 @@ namespace Entities
         public virtual int StockInId { get; set; }
         public virtual DateTime Date { get; set; }
         public virtual string Description { get; set; }
+        public virtual double Price { get; set; }
         public virtual int Quantity { get; set; }
         public virtual ProductDTO Product { get; set; }
         public override bool Equals(object obj)

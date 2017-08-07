@@ -61,6 +61,7 @@ namespace WebPortal.Controllers
                     StockOutDTO stockOut = new StockOutDTO();
                     stockOut.Date = obj.order.Date;
                     stockOut.Description = "Simple Order";
+                    stockOut.Price = orderDetail.Amount;
                     stockOut.Product = new ProductDTO();
                     stockOut.Product.ProductId = orderDetail.Product.ProductId;
                     stockOut.Quantity = orderDetail.Quantity;
@@ -91,44 +92,18 @@ namespace WebPortal.Controllers
         [HttpPost]
         public JsonResult Edit(int id, BigModelDTO obj)
         {
-            try
-            {
                 MyRepository repository = new MyRepository();
-                repository.DeleteOrder(id);
-                obj.order.Customer = new CustomerDTO();
+                OrderDTO orderObj = repository.GetOrder(id);
                 if (obj.customer.CustomerId == 0)
                 {
 
-                    obj.order.Customer.CustomerId = repository.AddCustomer(obj.customer);
+                    orderObj.Customer.CustomerId = repository.AddCustomer(obj.customer);
                 }
-                obj.order.Customer.CustomerId = obj.customer.CustomerId;
-                repository.AddOrder(obj.order);
-                int orderId = obj.order.OrderId;
-                foreach (var orderDetail in obj.orderDetail)
-                {
-                    orderDetail.Order = new OrderDTO();
-                    orderDetail.Order.OrderId = orderId;
-                    repository.AddOrderDetail(orderDetail);
-                    int orderDetailId = orderDetail.OrderDetailId;
-
-                    StockOutDTO stockOut = new StockOutDTO();
-                    stockOut.Date = obj.order.Date;
-                    stockOut.Description = "Simple Order";
-                    stockOut.Product = new ProductDTO();
-                    stockOut.Product.ProductId = orderDetail.Product.ProductId;
-                    stockOut.Quantity = orderDetail.Quantity;
-                    stockOut.OrderDetail = new OrderDetailDTO();
-                    stockOut.OrderDetail.OrderDetailId = orderDetailId;
-
-                    repository.AddStockOut(stockOut);
-
-                }
+                orderObj.Customer.CustomerId = obj.customer.CustomerId;
+                repository.UpdateOrder(orderObj);
+                
                 return Json("Successfully added", JsonRequestBehavior.AllowGet);
-            }
-            catch
-            {
-                return Json("Error while adding", JsonRequestBehavior.AllowGet);
-            }
+            
         }
 
         // GET: Order/Delete/5

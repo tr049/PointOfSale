@@ -47,7 +47,7 @@
                 </td>
                 <td>
                     @{
-                        double sum = repo.GetOrder(item.OrderId).OrderDetails.Sum(x => x.Price);
+                        double sum = repo.GetOrder(item.OrderId).OrderDetails.Sum(x => x.Amount);
                         <text>@sum</text>
                     }
                     

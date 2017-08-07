@@ -165,13 +165,13 @@
                                                     @Html.DisplayFor(modelItem => item.Product.Name)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.Product.Price)
+                                                    @products.Find(x => x.Name == item.Product.Name).Price
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.Quantity)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.Price)
+                                                    @Html.DisplayFor(modelItem => item.Amount)
                                                 </td>
                                                 <td>
                                                     <a href="javascript:void(0)" id="@item.Product.ProductId" onclick="return removeFromCart(id)">Remove</a>
@@ -374,6 +374,11 @@
                     sum += parseInt($(this).html());
 
                 });
+                $('#invoiceTableBody > tr > td:nth-child(6)').each(function () {
+
+                    $(this).addClass("hidden");
+
+                });
                 var valAfterDiscount = sum - parseInt($('#userDiscount').val());
                 $("#invoiceTableBody").append('<tr>' + '<td> &nbsp;</td>' + '<td> &nbsp;</td>' + '<td> <strong>Subtotal</strong></td>' + '<td>' + sum + '</td>' + '<td class="hidden" > <a href="javascript:void(0)" id= "' + $("#productId").val() + '" onclick="return removeFromCart(id)">Remove</a></td>' + '<td class ="hidden">' + $("#productId").val() + '</td>' + '</tr>');
                 $("#invoiceTableBody").append('<tr>' + '<td> &nbsp;</td>' + '<td> &nbsp;</td>' + '<td> <strong>Discount</strong></td>' + '<td>' + $('#userDiscount').val() + '</td>' + '<td class="hidden" > <a href="javascript:void(0)" id= "' + $("#productId").val() + '" onclick="return removeFromCart(id)">Remove</a></td>' + '<td class ="hidden">' + $("#productId").val() + '</td>' + '</tr>');
@@ -409,7 +414,7 @@
                 $("#btnFinish").addClass("hidden");
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("Edit", "Order", new { id = "'" + Model.OrderId +"'" })',
+                    url: '@Url.Action("Edit", "Order", new { id = Model.OrderId })',
                     data: JSON.stringify(orderJson),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -438,6 +443,13 @@
         }
         function prevTab(elem) {
             $(elem).prev().find('a[data-toggle="tab"]').click();
+            if (count == 4) {
+                $('#cartBody > tr > td:nth-child(6)').each(function () {
+
+                    $(this).addClass("hidden");
+
+                });
+            }
             count--;
         }
 
@@ -507,8 +519,7 @@
         });
 
 
-        $(function () {
-            var productsData = [
+        var productsData = [
                 @for (int i = 0; i < products.Count; i++)
                 {
 
@@ -527,20 +538,23 @@
                     }
                     else
                     {
-                         <text>
-                            {
-                                value: "@products[i].Name",
-                                label: "@products[i].Name",
-                                id: "@products[i].ProductId",
-                                quantity: "@products[i].Quantity",
-                                basePrice: "@products[i].Price"
-                            }
-                        </text>
+                        <text>
+                           {
+                               value: "@products[i].Name",
+                               label: "@products[i].Name",
+                               id: "@products[i].ProductId",
+                               quantity: "@products[i].Quantity",
+                               basePrice: "@products[i].Price"
+                           }
+                       </text>
                         break;
                     }
 
                 }
-            ];
+        ];
+
+        $(function () {
+
 
             $("#productInput").autocomplete({
                 minLength: 0,
@@ -559,18 +573,26 @@
             })
         });
 
-        function addToCart()
-        {
-            $("#cartBody").append('<tr>' + '<td>' + $("#productInput").val() + '</td>' + '<td>' + $("#productPrice").val() + '</td>' + '<td>' + $("#productQuantityUser").val() + '</td>' + '<td>' + $("#productQuantityUser").val() * $("#productPrice").val() + '</td>' + '<td> <a href="javascript:void(0)" id= "' + $("#productId").val() + '" onclick="return removeFromCart(id)">Remove</a></td>' + '<td class ="hidden">' + $("#productId").val() + '</td>' + '</tr>');
+        function addToCart() {
+            var selectedProduct = $("#productInput").val();
+            for (var i = 0; i < productsData.length; i++) {
+                if (productsData[i].value == selectedProduct) {
+                    productsData[i].quantity -= $("#productQuantityUser").val();
+                }
+            }
+
+            $("#tableList").dataTable().fnAddData([$("#productInput").val(), $("#productPrice").val(), $("#productQuantityUser").val(), $("#productQuantityUser").val() * $("#productPrice").val(), '<a href="javascript:void(0)" id= "' + $("#productId").val() + '" onclick="return removeFromCart(id)">Remove</a>', $("#productId").val()]);
+            $("#cartBody").find('tr:last td:last').addClass("hidden");
             $("#productInput").val("");
             $("#productPrice").val("");
             $("#productQuantity").val("");
             $("#productQuantityUser").val("");
         }
 
-        function removeFromCart(id)
-        {
-            $("#tableList #" + id).closest('tr').remove();
+        function removeFromCart(id) {
+            var row = $("#tableList #" + id).closest('tr').get(0);
+            var position = $("#tableList").dataTable().fnGetPosition(row);
+            $("#tableList").dataTable().fnDeleteRow(position);
             return false;
         }
 

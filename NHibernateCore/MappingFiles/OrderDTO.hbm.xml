@@ -3,7 +3,7 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Entities" namespace="Entities" auto-import="true">
 
   <class name="OrderDTO" table="Orders">
-    <id name="OrderId" column ="OrderId">
+    <id name="OrderId" column ="orderId">
       <generator class="native"/>
     </id>
     <property name="Discount" column="discount"/>

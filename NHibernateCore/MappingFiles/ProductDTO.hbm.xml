@@ -3,12 +3,11 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Entities" namespace="Entities" auto-import="true">
   
   <class name="ProductDTO" table="Product">
-    <id name="ProductId" column ="ProductId">
+    <id name="ProductId" column ="productId">
       <generator class="native"/>
     </id>
     <property name="Name" column="name"/>
     <property name="Description" column="description"/>
-    <property name="Price" column="price"/>
     <many-to-one name="Category" class="CategoryDTO" column="categoryId" unique="true"/>
     <bag name="OrderDetails" inverse="true" generic="true" lazy="true" fetch="subselect">
       <key column="productId"/>

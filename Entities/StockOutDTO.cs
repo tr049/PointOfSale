@@ -12,6 +12,7 @@ namespace Entities
         public virtual DateTime Date { get; set; }
         public virtual string Description { get; set; }
         public virtual int Quantity{ get; set; }
+        public virtual double Price { get; set; }
         public virtual ProductDTO Product { get; set; }
         public virtual OrderDetailDTO OrderDetail { get; set; }
 

@@ -64,9 +64,7 @@ namespace DataAccessLayer.Data_Provider
         {
             using (session.BeginTransaction())
             {
-                OrderDTO old = session.Get<OrderDTO>(dto.OrderId);
-                old = dto;
-                session.SaveOrUpdate(old);
+                session.Update(dto);
                 session.Transaction.Commit();
                 return 1;
             }
