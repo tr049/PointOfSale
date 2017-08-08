@@ -149,7 +149,7 @@
                                                 Quantity
                                             </th>
                                             <th>
-                                                Price
+                                                Amount
                                             </th>
                                             <th>Action</th>
                                             <th class="hidden" data-override="Product.ProductId">
@@ -260,7 +260,7 @@
                                                             Quantity
                                                         </th>
                                                         <th>
-                                                            Price
+                                                            Amount
                                                         </th>
                                                         <th class="hidden">
                                                             ProductId
@@ -582,7 +582,9 @@
             }
 
             $("#tableList").dataTable().fnAddData([$("#productInput").val(), $("#productPrice").val(), $("#productQuantityUser").val(), $("#productQuantityUser").val() * $("#productPrice").val(), '<a href="javascript:void(0)" id= "' + $("#productId").val() + '" onclick="return removeFromCart(id)">Remove</a>', $("#productId").val()]);
-            $("#cartBody").find('tr:last td:last').addClass("hidden");
+            $("#cartBody").find('tr td:last').each(function () { 
+                $(this).addClass("hidden");
+            });
             $("#productInput").val("");
             $("#productPrice").val("");
             $("#productQuantity").val("");
@@ -592,10 +594,16 @@
         function removeFromCart(id) {
             var row = $("#tableList #" + id).closest('tr').get(0);
             var position = $("#tableList").dataTable().fnGetPosition(row);
+            for (var i = 0; i < productsData.length; i++) {
+                if (productsData[i].value == selectedProduct) {
+                    productsData[i].quantity += row.find("td:nth-Child(3)").html();
+                }
+            }
             $("#tableList").dataTable().fnDeleteRow(position);
             return false;
         }
 
+        
 
 
     </script>

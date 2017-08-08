@@ -74,9 +74,6 @@
             <th>
                 Price
             </th>
-            <th>
-                Action
-            </th>
         </tr>
         @foreach (var item in Model.OrderDetails)
         {
@@ -90,11 +87,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Amount)
                 </td>
-
-                <td>
-                    @Html.ActionLink("Edit", "Edit", "OrderDetail", new { id = item.OrderDetailId },null) |
-                    @Html.ActionLink("Delete", "Delete", "OrderDetail", new { id = item.OrderDetailId }, null)
-                </td>
+                -
             </tr>
         }
 

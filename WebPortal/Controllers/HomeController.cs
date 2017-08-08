@@ -17,6 +17,22 @@ namespace WebPortal.Controllers
             ViewBag.Products = repository.GetAvailableProducts().ToList();
             List<StockOutDTO> lst = repository.GetStockOuts().ToList();
             ViewBag.Earning = lst;
+            ViewBag.stockOut = lst.GroupBy(x => x.Product.ProductId)
+                .Select(g => new StockOutDTO
+                {
+                    Quantity = g.Sum(c => c.Quantity),
+                    Product = g.First().Product
+                }).ToList();
+                
+                
+            List<StockInDTO> stockIn = repository.GetStockIns().ToList().GroupBy(x => x.Product.ProductId)
+                .Select(g => new StockInDTO
+                {
+                    Quantity = g.Sum(c => c.Quantity),
+                    Product = g.First().Product
+                }).ToList(); 
+            ViewBag.StockIn = stockIn;
+            ViewBag.ProductList = repository.GetProducts().ToList();
             ViewBag.TotalProductSold = lst.Sum(x => x.Quantity);
             ViewBag.ProductSoldlst = lst.GroupBy(x => x.Product.ProductId)
                 .Select(g => new StockOutDTO
